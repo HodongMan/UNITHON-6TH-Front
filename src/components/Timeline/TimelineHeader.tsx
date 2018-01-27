@@ -4,7 +4,7 @@ export default class TimelineHeader extends React.PureComponent<{}, {}> {
 
     render() {
         return (
-            <h1 className="project-name">RESPONSIVE TIMELINE</h1>
+            <h1 className="project-name">나의 타임라인</h1>
         );
     }
 }
