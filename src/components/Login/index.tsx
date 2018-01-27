@@ -21,7 +21,7 @@ export default class Login extends React.PureComponent<{}, {}> {
 
                                 if (input && window.localStorage) {
                                     window.localStorage.setItem('user', input[`value`]);
-                                    window.location.href = 'http://localhost';
+                                    window.location.href = 'http://52.79.215.229';
                                 }
                             }}
                         >

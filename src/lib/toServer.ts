@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const kUrl = 'http://localhost';
+const kUrl = 'http://52.79.215.229';
 
 export function getBoardList() {
 
