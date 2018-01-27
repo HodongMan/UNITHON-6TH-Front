@@ -1,7 +1,12 @@
 import *as React from 'react';
 
-import { Header, Timeline, TimelineHeader, Message } from '../components';
-import { getBoardList, getBoardContentAnalyzePretty, getBoardContentCollocationPretty } from '../lib/toServer';
+import { Header, Timeline, TimelineHeader, Message, Writer,  } from '../components';
+import { 
+    getBoardListByUser, 
+    getBoardContentAnalyzePretty, 
+    getBoardContentCollocationPretty,
+    createBoard,  
+}  from '../lib/toServer';
 
 interface BoardType {
     pk: number;
@@ -17,6 +22,8 @@ interface BoardType {
 interface MainState {
 
     boardList: BoardType[];
+    newTitle: string;
+    newContent: string;
 }
 
 export default class IndexContainer extends React.Component <{}, MainState> {
@@ -25,19 +32,36 @@ export default class IndexContainer extends React.Component <{}, MainState> {
         super(props);
 
         this.state = {
-            boardList : []
+            boardList : [],
+            newTitle: '',
+            newContent: '',
         };
         this.onClickToGetKeywordAnalys = this.onClickToGetKeywordAnalys.bind(this);
+        this.onTitleHandling = this.onTitleHandling.bind(this);
+        this.onContentHandling = this.onContentHandling.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    componentWillMount() {
+        if (window.localStorage) {
+            if (!window.localStorage.getItem('user')) {
+                window.location.href = window.location.href + 'login';
+            }
+        }
     }
 
     componentDidMount() {
-        getBoardList()
-        .then(response => {
-            this.setState({
-                boardList : response.data,
-            });
-        })
-        .catch(error => window.console.log(error));
+        
+        if (window.localStorage.getItem('user')) {
+
+            getBoardListByUser(window.localStorage.getItem('user'))
+            .then(response => {
+                this.setState({
+                    boardList : response.data,
+                });
+            })
+            .catch(error => window.console.log(error));
+        }
     }
 
     onClickToGetKeywordAnalys(id: number) {
@@ -59,6 +83,31 @@ export default class IndexContainer extends React.Component <{}, MainState> {
         .catch((error) => window.console.log(error));
     }
 
+    onTitleHandling(value: string) {
+        this.setState({
+            newTitle: value,
+        });
+    }
+
+    onContentHandling(value: string) {
+        this.setState({
+            newContent: value,
+        });
+    }
+
+    onSubmit() {
+        if (window.localStorage.getItem('user')) {
+            createBoard(
+                this.state.newTitle, 
+                this.state.newContent,
+                window.localStorage.getItem('user'),
+            )
+            .then((response) => window.location.href = 'http://localhost')
+            .catch((error) => window.console.log(error));
+        }
+        
+    }
+
     render() {
         return (
             <div>
@@ -66,6 +115,11 @@ export default class IndexContainer extends React.Component <{}, MainState> {
                 
                 <div className="container">
                     <TimelineHeader />
+                    <Writer 
+                        onContentHandling={this.onContentHandling}
+                        onTitleHandling={this.onTitleHandling}
+                        onSubmit={this.onSubmit}
+                    />
                     <Message />
                     <div id="timeline">
                         {

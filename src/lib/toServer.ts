@@ -7,6 +7,23 @@ export function getBoardList() {
     return axios.get(`${kUrl}/api/board/`);
 }
 
+export function getBoardListByUser(user: string | null) {
+    return axios.get(`${kUrl}/api/board/user/${user}/`);
+}
+
+export function createBoard(title: string, content: string, user: string | null) {
+    window.console.log({
+        user,
+        title,
+        content,
+    });
+    return axios.post(`${kUrl}/api/board/`, {
+        user,
+        title,
+        content,
+    });
+}
+
 export function getBoardContentAnalyzePretty(id: number) {
 
     return axios.get(`${kUrl}/api/board/analyze/${id}/pretty/`);

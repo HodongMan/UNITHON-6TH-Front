@@ -16,8 +16,8 @@ export default class Timeline extends React.PureComponent<Props, object> {
             <div className="timeline-item">
                 <div className="timeline-icon" />
                 <div className={right}>
-                    <h2>{this.props.title}</h2>
-                        <p>
+                    <h2 className="timeline_header">{this.props.title}</h2>
+                        <p className="timeline_content">
                             {this.props.content}
                         </p>
                     <a 

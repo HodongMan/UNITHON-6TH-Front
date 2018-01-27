@@ -6,15 +6,29 @@ export default class Header extends React.PureComponent<{}, {}> {
         return (
             <header>
                 <div className="container">
-                    <h1 className="logo">
-                        BRUNO<span>RODRIGUES</span>
-                    </h1>
+                    <a href="/">
+                        <h1 className="logo">
+                            <img src="/LOGO.png" />
+                        </h1>
+                    </a>
                     <section className="social">
-                        <a className="btn" href="https://www.github.com/itbruno">Github</a>
-                        <a className="btn" href="https://www.twitter.com/_brunoweb">Twitter</a>
+                        <a 
+                            className="btn"
+                            onClick={(event) => {
+                                event.preventDefault();
+                                const writer: HTMLElement | null = document.getElementById('writer');
+                                
+                                if (writer) {
+                                    writer.style.display = 'block';
+                                }
+                            }}
+                        >
+                            글쓰기
+                        </a>
+                        <a className="btn">Twitter</a>
                     </section>
                 </div>
             </header>
-        );
+        );  
     }
 }
