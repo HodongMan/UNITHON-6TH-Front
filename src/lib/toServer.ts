@@ -12,11 +12,6 @@ export function getBoardListByUser(user: string | null) {
 }
 
 export function createBoard(title: string, content: string, user: string | null) {
-    window.console.log({
-        user,
-        title,
-        content,
-    });
     return axios.post(`${kUrl}/api/board/`, {
         user,
         title,
