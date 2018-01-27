@@ -26,6 +26,11 @@ export default class Timeline extends React.PureComponent<Props, object> {
                         onClick={(event) => {
                             event.preventDefault();
                             this.props.onclick(this.props.pk);
+                            const modal: HTMLElement | null = document.getElementById('modal');
+                            
+                            if (modal) {
+                                modal.style.display = 'block';
+                            }
                         }}
                     >
                         button

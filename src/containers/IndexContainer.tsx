@@ -42,10 +42,20 @@ export default class IndexContainer extends React.Component <{}, MainState> {
 
     onClickToGetKeywordAnalys(id: number) {
         getBoardContentAnalyzePretty(id)
-        .then((response) => window.console.log(response.data.result.split(',')))
+        .then((response) => {
+            const modal: HTMLElement | null = document.getElementById('modal_content_one');
+            if (modal) {
+                modal.textContent = response.data.result;
+            }
+        })
         .catch((error) => window.console.log(error));
         getBoardContentCollocationPretty(id)
-        .then((response) => window.console.log(response.data.result.split(',')))
+        .then((response) => {
+            const modal: HTMLElement | null = document.getElementById('modal_content');
+            if (modal) {
+                modal.textContent = response.data.result.slice(0, response.data.result.length - 1);
+            }
+        })
         .catch((error) => window.console.log(error));
     }
 
